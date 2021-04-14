@@ -1,0 +1,171 @@
+openapi: 3.0.0
+info:
+  title: A Todo List Microservice
+  description: Title
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/
+paths:
+  /users:
+    post:
+      tags:
+        - createUser
+      summary: Create a new user for system
+      operationId: createUser
+      requestBody:
+        description: Create a new user for system
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '200':
+          description: Create article successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
+
+    get:
+      tags:
+        - getUserList
+      summary: Get the list of user in this system
+      operationId: GetListUser
+      responses:
+        '200':
+          description: Get the list of user in system
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+    put:
+      tags:
+        - UpdateUser
+      summary: Update User Information
+      operationId: UpdateUser
+      requestBody:
+        description: Update User Info
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: Update Category successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
+  /users/Id:
+    get:
+      tags:
+        - get User By Id
+      summary: Get the info of user by Id
+      operationId: GetUserById
+      parameters:
+        - in: query
+          name: Id
+          schema:
+            type: string
+          required: false
+      responses:
+        '200':
+          description: Get the info of user by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfoResponse'
+
+components:
+  schemas:
+    UserListResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResponseModel'
+    UserResponseModel:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        username:
+          type: string
+    CreateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+    UserInfoResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserInfoResponseModel'
+    UserInfoResponseModel:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        username:
+          type: string
+    UpdateUserRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+        Username:
+          type: string
+        Name:
+          type: string
+        Email:
+          type: string
+    ObjectCreationSuccessResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        responseCode:
+          type: integer
+
+    ApiError:
+      type: object
+      properties:
+        faults:
+          type: array
+          items:
+            $ref: "#/components/schemas/Fault"
+        responseCode:
+          type: integer
+    Fault:
+      type: object
+      properties:
+        internalMessage:
+          type: string
+        code:
+          type: integer
+        userMessage:
+          type: string
+
+  examples:
+    InternalServerError:
+      value:
+        responseCode: 500
+        faults:
+          -:
+          userMessage: There're some error when processing this request. Please retry again or contact the site administrator for supporting
+          internalMessage: Internal server error
+          code: 1000
+          responseCode: 500
