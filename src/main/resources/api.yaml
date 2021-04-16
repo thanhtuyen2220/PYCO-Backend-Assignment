@@ -56,25 +56,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectCreationSuccessResponse'
-  /users/Id:
-    get:
-      tags:
-        - get User By Id
-      summary: Get the info of user by Id
-      operationId: GetUserById
+  /users/id:
+    delete:
+      summary: Delete User
+      operationId: DeleteUser
       parameters:
-        - in: query
-          name: Id
+        - name: id
+          in: query
+          description: UserId
+          required: true
           schema:
             type: string
-          required: false
+            format: string
       responses:
         '200':
-          description: Get the info of user by id
+          description: Delete User successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserInfoResponse'
+                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
 
 components:
   schemas:

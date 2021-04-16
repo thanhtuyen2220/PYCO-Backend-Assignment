@@ -26,7 +26,7 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
-    public User getUserById(ObjectId Id) {
+    public User findUserById(ObjectId Id) {
         return userRepository.findUserById(Id);
     }
 
@@ -48,6 +48,11 @@ public class UserServiceImp implements UserService{
             }
         }
         return null;
+    }
+
+    @Override
+    public void DeleteUser(String id) {
+        userRepository.deleteById(new ObjectId(id));
     }
 
     @Override

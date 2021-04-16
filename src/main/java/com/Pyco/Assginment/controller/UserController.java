@@ -35,15 +35,16 @@ public class UserController implements UsersApi {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @Override
+    /*@Override
     public ResponseEntity<UserInfoResponse> getUserById(@Valid String Id) {
-        User user = userService.getUserById(new ObjectId(Id));
+        /*User user = userService.findUserById(new ObjectId(Id));
         List<User> userList = new ArrayList<>();
         if(user != null) {
             userList.add(user);
         }
-        return buildUserInfoResponse(userList);
-    }
+        return buildUserInfoResponse(userList);*/
+       /* return null;
+    }*/
 
     @Override
     public ResponseEntity<UserListResponse> getListUser() {
@@ -53,7 +54,7 @@ public class UserController implements UsersApi {
 
     @Override
     public ResponseEntity<ObjectCreationSuccessResponse> updateUser(@Valid UpdateUserRequest updateUserRequest) {
-        User old_info = userService.getUserById(new ObjectId(updateUserRequest.getUserId()));
+        User old_info = userService.findUserById(new ObjectId(updateUserRequest.getUserId()));
         User temp = new User();
         temp.setEmail(updateUserRequest.getEmail());
         temp.setUsername(updateUserRequest.getUsername());
@@ -61,6 +62,15 @@ public class UserController implements UsersApi {
         User new_info = userService.UpdateUser(old_info,temp);
         ObjectCreationSuccessResponse result = new ObjectCreationSuccessResponse();
         result.setId(new_info.getId().toString());
+        result.setResponseCode(HttpStatus.CREATED.value());
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<ObjectCreationSuccessResponse> deleteUser(String id) {
+        userService.DeleteUser(id);
+        ObjectCreationSuccessResponse result = new ObjectCreationSuccessResponse();
+        result.setId(id);
         result.setResponseCode(HttpStatus.CREATED.value());
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
