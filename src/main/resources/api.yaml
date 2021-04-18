@@ -39,25 +39,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserListResponse'
 
-    put:
-      tags:
-        - UpdateUser
-      summary: Update User Information
-      operationId: UpdateUser
-      requestBody:
-        description: Update User Info
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateUserRequest'
-      responses:
-        '200':
-          description: Update Category successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
-
   /users/{id}:
     get:
       tags:
@@ -79,6 +60,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserInfoResponse'
+    put:
+      tags:
+        - UpdateUser
+      summary: Update User Information
+      operationId: UpdateUser
+      parameters:
+        - name: id
+          in: path
+          description: UserId
+          required: true
+          schema:
+            type: string
+            format: string
+      requestBody:
+        description: Update User Info by Id
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: Update User Information successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
     delete:
       tags:
         - Delete User Id
@@ -273,6 +280,8 @@ components:
           type: string
         status:
           type: boolean
+        taskId:
+          type: string
     UpdateTaskRequest:
       type: object
       properties:

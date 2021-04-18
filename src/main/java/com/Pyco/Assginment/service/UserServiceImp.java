@@ -1,5 +1,6 @@
 package com.Pyco.Assginment.service;
 
+import com.Pyco.Assginment.model.ToDo;
 import com.Pyco.Assginment.model.User;
 import com.Pyco.Assginment.repository.UserRepository;
 import org.bson.types.ObjectId;
@@ -31,23 +32,21 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
-    public User UpdateUser(User user,User user_new) {
-        if(userRepository.findUserById(user.getId()) !=null){
-            if(user.getUsername() != user_new.getUsername() || user.getName() != user_new.getName() || user.getEmail() != user_new.getEmail() ){
-                if(user_new.getUsername() !=null){
-                    user.setUsername(user_new.getUsername());
-                }
-                if(user_new.getEmail()!=null){
-                    user.setEmail(user_new.getEmail());
-                }
-                if(user_new.getName()!=null){
-                    user.setName(user_new.getName());
-                }
-                userRepository.save(user);
-                return user;
-            }
+    public User UpdateUser(String userId,User updateUser) {
+        User user = userRepository.findUserById(new ObjectId(userId));
+        if(updateUser.getName()!= null){
+            user.setName(updateUser.getName());
         }
-        return null;
+        if(updateUser.getUsername()!=null){
+            user.setUsername(updateUser.getUsername());
+        }
+        if(updateUser.getEmail()!=null){
+            user.setEmail(updateUser.getEmail());
+        }
+        if(updateUser.getEnabled() != user.getEnabled()){
+            user.setEnabled(updateUser.getEnabled());
+        }
+        return userRepository.save(user);
     }
 
     @Override

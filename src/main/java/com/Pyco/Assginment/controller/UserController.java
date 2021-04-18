@@ -1,5 +1,6 @@
 package com.Pyco.Assginment.controller;
 
+import com.Pyco.Assginment.model.ToDo;
 import com.Pyco.Assginment.model.User;
 import com.Pyco.Assginment.service.UserService;
 import com.Pyco.Assignment.api.UsersApi;
@@ -59,17 +60,13 @@ public class UserController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<ObjectCreationSuccessResponse> updateUser(@Valid UpdateUserRequest updateUserRequest) {
-        User old_info = userService.findUserById(new ObjectId(updateUserRequest.getUserId()));
-        User temp = new User();
-        temp.setEmail(updateUserRequest.getEmail());
-        temp.setUsername(updateUserRequest.getUsername());
-        temp.setName(updateUserRequest.getName());
-        User new_info = userService.UpdateUser(old_info,temp);
+    public ResponseEntity<ObjectCreationSuccessResponse> updateUser(String id, @Valid UpdateUserRequest updateUserRequest) {
+        User user = modelMapper.map(updateUserRequest,User.class);
+        userService.UpdateUser(id,user);
         ObjectCreationSuccessResponse result = new ObjectCreationSuccessResponse();
-        result.setId(new_info.getId().toString());
-        result.setResponseCode(HttpStatus.CREATED.value());
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+        result.setId(id);
+        result.setResponseCode(200);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @Override

@@ -10,7 +10,7 @@ public interface UserService {
     List<User> getAllUsers();
     User createUser(User user);
     User findUserById(ObjectId Id);
-    User UpdateUser(User user,User user_new);
+    User UpdateUser(String userId,User updateUser);
     void DeleteUser(String id);
     User findUserByEmail(String email);
     User getUserbyId(ObjectId id);
