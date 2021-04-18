@@ -9,7 +9,6 @@ public interface ToDoService {
     ToDo createTask(ToDo toDo);
     List<ToDo> getAllToDo();
     ToDo findToDoById(ObjectId Id);
-    ToDo UpdateToDo();
+    ToDo UpdateToDo(ToDo todo,String toDoId);
     void deleteToDo(String id);
-
 }

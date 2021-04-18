@@ -27,16 +27,14 @@ public class ToDo {
 
     @Getter
     @Setter
-    private String level;
+    private String priority;
 
     @Getter
     @Setter
-    private boolean Completed = false;
+    private boolean status = false;
 
     @Getter
     @Setter
     @DBRef
     private User author;
-
-
 }

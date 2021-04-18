@@ -20,7 +20,7 @@ paths:
               $ref: '#/components/schemas/CreateUserRequest'
       responses:
         '200':
-          description: Create article successfully
+          description: Create user successfully
           content:
             application/json:
               schema:
@@ -38,6 +38,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserListResponse'
+
     put:
       tags:
         - UpdateUser
@@ -56,13 +57,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectCreationSuccessResponse'
-  /users/id:
+
+  /users/{id}:
+    get:
+      tags:
+        - getUserbyId
+      summary: Get User by Id
+      operationId: GetUserId
+      parameters:
+        - name: id
+          in: path
+          description: UserId
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: Get the info of user by Id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfoResponse'
     delete:
+      tags:
+        - Delete User Id
       summary: Delete User
       operationId: DeleteUser
       parameters:
         - name: id
-          in: query
+          in: path
           description: UserId
           required: true
           schema:
@@ -75,6 +99,65 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectCreationSuccessResponse'
+  /todo:
+    post:
+      tags:
+        - createtodo
+      summary: Create a todo task
+      operationId: createTodo
+      requestBody:
+        description: Create a Todo task for system
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/CreateToDoRequest'
+      responses:
+        '200':
+          description: Create Todo successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
+    get:
+      tags:
+        - getTodoList
+      summary: Get the list of todo in this system
+      operationId: GetListTask
+      responses:
+        '200':
+          description: Get the list of task in system
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskListResponse'
+  /todo/{toDoid}:
+    put:
+      tags:
+        - UpdateTask
+      summary: Update Task Information by Id
+      operationId: UpdateTask
+      parameters:
+        - name: toDoid
+          in: path
+          description: TaskId
+          required: true
+          schema:
+            type: string
+            format: string
+      requestBody:
+        description: Update Task Info by Id
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTaskRequest'
+      responses:
+        '200':
+          description: Update Task successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
+
 
 components:
   schemas:
@@ -93,6 +176,8 @@ components:
         email:
           type: string
         username:
+          type: string
+        userId:
           type: string
     CreateUserRequest:
       type: object
@@ -132,6 +217,54 @@ components:
           type: string
         Email:
           type: string
+    CreateToDoRequest:
+      type: object
+      properties:
+        authorId:
+          type: string
+        tittle:
+          type: string
+        Content:
+          type: string
+        priority:
+          type: string
+        status:
+          type: boolean
+          default: false
+    TaskListResponse:
+      type: object
+      properties:
+        todo:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskResponseModel'
+    TaskResponseModel:
+      type: object
+      properties:
+        authorId:
+          type: string
+        authorName:
+          type: string
+        tittle:
+          type: string
+        content:
+          type: string
+        priority:
+          type: string
+        status:
+          type: boolean
+    UpdateTaskRequest:
+      type: object
+      properties:
+        tittle:
+          type: string
+        content:
+          type: string
+        priority:
+          type: string
+        status:
+          type: boolean
+
     ObjectCreationSuccessResponse:
       type: object
       properties:

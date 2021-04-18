@@ -53,6 +53,12 @@ public class UserController implements UsersApi {
     }
 
     @Override
+    public ResponseEntity<UserInfoResponse> getUserId(String id) {
+       User user =  userService.getUserbyId(new ObjectId(id));
+        return buildUserInfoResponse(user);
+    }
+
+    @Override
     public ResponseEntity<ObjectCreationSuccessResponse> updateUser(@Valid UpdateUserRequest updateUserRequest) {
         User old_info = userService.findUserById(new ObjectId(updateUserRequest.getUserId()));
         User temp = new User();
@@ -82,10 +88,10 @@ public class UserController implements UsersApi {
         }
         return new ResponseEntity<>(userListResponse, HttpStatus.OK);
     }
-    private ResponseEntity<UserInfoResponse> buildUserInfoResponse(List<User> userList) {
+    private ResponseEntity<UserInfoResponse> buildUserInfoResponse(User user) {
         UserInfoResponse userInfoResponse = new UserInfoResponse();
-        if(userList != null) {
-            userList.forEach(item -> userInfoResponse.addUsersItem(modelMapper.map(item, UserInfoResponseModel.class)));
+        if(user != null) {
+            userInfoResponse.addUsersItem(modelMapper.map(user,UserInfoResponseModel.class));
         }
         return new ResponseEntity<>(userInfoResponse, HttpStatus.OK);
     }

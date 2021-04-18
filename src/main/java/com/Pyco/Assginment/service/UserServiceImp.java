@@ -55,9 +55,15 @@ public class UserServiceImp implements UserService{
         userRepository.deleteById(new ObjectId(id));
     }
 
+
     @Override
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User getUserbyId(ObjectId id) {
+        return userRepository.getById(id);
     }
 
     public Page<User> getUserByPage(int page, int size){

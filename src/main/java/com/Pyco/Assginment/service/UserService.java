@@ -13,6 +13,7 @@ public interface UserService {
     User UpdateUser(User user,User user_new);
     void DeleteUser(String id);
     User findUserByEmail(String email);
+    User getUserbyId(ObjectId id);
     Page<User>getUserByPage(int page,int size);
 
 }
