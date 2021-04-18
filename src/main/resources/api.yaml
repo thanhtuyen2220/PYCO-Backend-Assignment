@@ -130,14 +130,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TaskListResponse'
-  /todo/{toDoid}:
+  /todo/{toDoId}:
     put:
       tags:
         - UpdateTask
       summary: Update Task Information by Id
       operationId: UpdateTask
       parameters:
-        - name: toDoid
+        - name: toDoId
           in: path
           description: TaskId
           required: true
@@ -153,6 +153,26 @@ paths:
       responses:
         '200':
           description: Update Task successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectCreationSuccessResponse'
+    delete:
+      tags:
+        - Delete Todo by Id
+      summary: Delete Task
+      operationId: DeleteTodo
+      parameters:
+        - name: toDoId
+          in: path
+          description: Task id
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: Delete Todo successfully
           content:
             application/json:
               schema:

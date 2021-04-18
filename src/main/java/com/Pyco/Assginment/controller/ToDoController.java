@@ -47,13 +47,23 @@ public class ToDoController implements TodoApi {
     @Override
     public ResponseEntity<ObjectCreationSuccessResponse> updateTask(String toDoId,@Valid UpdateTaskRequest updateTaskRequest) {
         ToDo toDo = modelMapper.map(updateTaskRequest,ToDo.class);
-        toDoService.UpdateToDo(toDo,toDoId);
+        toDoService.UpdateToDo(toDoId,toDo);
         ObjectCreationSuccessResponse result = new ObjectCreationSuccessResponse();
         result.setId(toDoId);
         result.setResponseCode(200);
         return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
+
+    @Override
+    public ResponseEntity<ObjectCreationSuccessResponse> deleteTodo(String toDoId) {
+        toDoService.deleteToDo(toDoId);
+        ObjectCreationSuccessResponse result = new ObjectCreationSuccessResponse();
+        result.setId(toDoId);
+        result.setResponseCode(HttpStatus.CREATED.value());
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
     private ResponseEntity<TaskListResponse> buildTaskListResponse(List<ToDo> toDoList) {
         TaskListResponse taskListResponse = new TaskListResponse();
         if(toDoList != null) {

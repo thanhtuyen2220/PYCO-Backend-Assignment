@@ -28,10 +28,11 @@ public class ToDoServiceImp implements ToDoService {
         return toDoRepository.findToDoById(Id);
     }
 
+
     @Override
-    public ToDo UpdateToDo(ToDo updateToDo, String toDoId) {
-        ToDo toDo = toDoRepository.getToDoById(new ObjectId(toDoId));
-        if(updateToDo.getAuthor().getId().equals(toDo.getAuthor().getId())){
+    public ToDo UpdateToDo(String toDoId,ToDo updateToDo) {
+        //ToDo toDo = toDoRepository.findToDoById(new ObjectId(toDoId));
+        ToDo toDo = toDoRepository.findToDoById(new ObjectId(toDoId));
             if(updateToDo.getContent()!= null){
                 toDo.setContent(updateToDo.getContent());
             }
@@ -44,7 +45,6 @@ public class ToDoServiceImp implements ToDoService {
             if(updateToDo.isStatus()!= toDo.isStatus()){
                 toDo.setStatus(updateToDo.isStatus());
             }
-        }
         return toDoRepository.save(toDo);
     }
 
